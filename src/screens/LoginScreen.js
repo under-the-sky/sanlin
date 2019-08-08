@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import { Login } from '../service';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -55,32 +56,34 @@ export default class LoginScreen extends React.Component {
     );
   }
 
-  Login = (phone, password) => {
-    return fetch('http://localhost:3000/api/v1/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        phone,
-        password,
-      }),
-    })
-      .then((res) => {
-        if (res.status == 400) {
-          throw new Error(400);
-        }
-        return res;
-      })
-      .then(res => res.json())
-      .catch((error) => error)
-  }
+  // Login = (phone, password) => {
+  //   console.log(2, phone, password)
+  //   return fetch('http://api.tynb0622.com/api/v1/login', {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       phone,
+  //       password,
+  //     }),
+  //   })
+  //     .then((res) => {
+  //       if (res.status == 400) {
+  //         throw new Error(400);
+  //       }
+  //       return res;
+  //     })
+  //     .then(res => res.json())
+  //     .catch((error) => error)
+  // }
 
   _signInAsync = async () => {
     const { phone, password } = this.state
-    const result = await this.Login(phone, password)
+    const result = await Login(phone, password)
     if (result.user) {
+      console.log(result.user)
       await AsyncStorage.setItem('userToken', JSON.stringify(result.user));
       this.props.navigation.navigate('Main');
     }

@@ -3,7 +3,8 @@ import { Platform, Button } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
 
 // import TabBarIcon from '../components/TabBarIcon';
-import { Icon } from 'react-native-elements'
+// import { Icon } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/AntDesign';
 import HomeScreen from '../screens/HomeScreen';
 import FriendScreen from '../screens/FriendScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -20,8 +21,9 @@ HomeStack.navigationOptions = {
   tabBarLabel: '当前',
   tabBarIcon: ({ focused }) => (
     <Icon
-      name='g-translate'
-      color='#00aced' />
+      name='message1'
+      size={24}
+      color='black' />
   ),
 };
 
@@ -37,8 +39,9 @@ LinksStack.navigationOptions = {
   tabBarLabel: '朋友',
   tabBarIcon: ({ focused }) => (
     <Icon
-      name='g-translate'
-      color='#00aced' />
+      name='team'
+      size={24}
+      color='black' />
   ),
 };
 
@@ -54,8 +57,9 @@ SettingsStack.navigationOptions = {
   tabBarLabel: '个人',
   tabBarIcon: ({ focused }) => (
     <Icon
-      name='g-translate'
-      color='#00aced' />
+      name='solution1'
+      size={24}
+      color='black' />
   ),
 };
 

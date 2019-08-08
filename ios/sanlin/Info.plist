@@ -43,6 +43,8 @@
 	<string>LaunchScreen</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>AntDesign.ttf</string>
 		<string>FontAwesome.ttf</string>
 		<string>MaterialIcons.ttf</string>
 	</array>

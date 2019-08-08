@@ -22,7 +22,7 @@ export default class SettingsScreen extends React.Component {
       userInfo: {}
     }
   }
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     const userInfo = JSON.parse(await AsyncStorage.getItem('userToken'))
     console.log(1, userInfo)
     this.setState({

@@ -3,18 +3,26 @@ import { Platform, StyleSheet, AsyncStorage, View, Image } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import emojiUtils from 'emoji-utils';
 import SlackMessage from './SlackMessage';
+import { API_HOST } from '../config'
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.ws = new WebSocket('http://localhost:3000')
+    this.ws = new WebSocket(API_HOST)
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     // console.log(navigation.getParam('title'))
     return {
       title: navigation.getParam('title', '离线'),
-      tabBarLabel: '当前'
+      // tabBarLabel: '当前',
+      // tabBarIcon: ({ focused }) => (
+      //   <Icon
+      //     name='address-card'
+      //     color='black' />
+      // )
     }
   }
 
@@ -42,7 +50,7 @@ export default class HomeScreen extends React.Component {
 
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     const userInfo = JSON.parse(await AsyncStorage.getItem('userToken'))
     const user = {
       _id: userInfo._id,
