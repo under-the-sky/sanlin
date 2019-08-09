@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
     "test": "jest",
+    "dev": "ENVFILE=.env.dev react-native run-ios",
     "prod": "ENVFILE=.env.production react-native run-ios"
   },
   "dependencies": {
