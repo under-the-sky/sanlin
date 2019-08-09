@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   View,
-  AsyncStorage,
   Text
 } from 'react-native'
 import { Avatar, ListItem, Card } from 'react-native-elements'
+import AsyncStorage from '@react-native-community/async-storage';
 export default class SettingsScreen extends React.Component {
   /**
    * Go ahead and delete ExpoConfigView and replace it with your content;

@@ -1,13 +1,5 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  Button,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
 import { AuthStack, tabNavigator } from './MainTabNavigator';
 
 import AuthLoadingScreen from './AuthNavigator';

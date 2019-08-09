@@ -1,28 +1,20 @@
 import React from 'react';
-import { Platform, StyleSheet, AsyncStorage, View, Image } from 'react-native';
+import { Platform, StyleSheet, View, Image } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import emojiUtils from 'emoji-utils';
 import SlackMessage from './SlackMessage';
-import { API_HOST } from '../config'
-
-import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
+import WS from '../service/websocket';
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.ws = new WebSocket(API_HOST)
+    this.ws = new WS()
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
-    // console.log(navigation.getParam('title'))
     return {
       title: navigation.getParam('title', '离线'),
-      // tabBarLabel: '当前',
-      // tabBarIcon: ({ focused }) => (
-      //   <Icon
-      //     name='address-card'
-      //     color='black' />
-      // )
     }
   }
 
@@ -36,18 +28,19 @@ export default class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.ws.onopen = (e) => {
-      this.props.navigation.setParams({ title: '在线' })
+    this.ws.websocket.close = (e) => {
+      this.props.navigation.setParams({ title: '离线' })
     }
-    this.ws.onmessage = (event) => {
+    this.ws.websocket.onopen = (e) => {
+      this.props.navigation.setParams({ title: '在线' })
+      this.ws.reset().start();
+    }
+    this.ws.websocket.onmessage = (event) => {
       const msg = JSON.parse(event.data)
-      // const { messages } = this.state
-      // messages.push(msg[0])
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, msg),
       }))
     }
-
   }
 
   async UNSAFE_componentWillMount() {
@@ -62,13 +55,11 @@ export default class HomeScreen extends React.Component {
       user
     })
   }
-  // function sendMessage() {
-  //   ws.send(document.getElementById('text').value);
-  // }
+
   onSend(messages = []) {
-    // this.ws.send()
-    console.log(2, messages)
-    this.ws.send(JSON.stringify(messages))
+    console.log(2)
+    this.ws.websocket.send(JSON.stringify(messages))
+    console.log(3)
     // this.setState(previousState => ({
     //   messages: GiftedChat.append(previousState.messages, messages),
     // }))

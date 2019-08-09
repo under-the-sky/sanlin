@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollView, StyleSheet, AsyncStorage } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
-
+import AsyncStorage from '@react-native-community/async-storage';
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Links',
