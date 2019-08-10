@@ -1,15 +1,15 @@
 import React from 'react';
-import { Platform, StyleSheet, View, Image } from 'react-native';
+import { Platform, StyleSheet, View, Image, Alert } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import emojiUtils from 'emoji-utils';
 import SlackMessage from './SlackMessage';
 import AsyncStorage from '@react-native-community/async-storage';
-import WS from '../service/websocket';
-export default class HomeScreen extends React.Component {
+import { connect } from 'react-redux';
+import { addMessage, addUser, addScoket } from '../reducer/homeReducer';
+class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.ws = new WS()
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -23,46 +23,28 @@ export default class HomeScreen extends React.Component {
     this.props.navigation.navigate('Auth');
   };
 
-  state = {
-    messages: [],
-  }
-
   componentDidMount() {
-    this.ws.websocket.close = (e) => {
-      this.props.navigation.setParams({ title: '离线' })
-    }
-    this.ws.websocket.onopen = (e) => {
-      this.props.navigation.setParams({ title: '在线' })
-      this.ws.reset().start();
-    }
-    this.ws.websocket.onmessage = (event) => {
-      const msg = JSON.parse(event.data)
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, msg),
-      }))
+    if (this.props.ws.onOpen && this.props.ws.onMessage) {
+      this.props.ws.onOpen(this.props.navigation.setParams({ title: '在线' }))
+      this.props.ws.onMessage((e) => {
+        const msg = JSON.parse(e.data)
+        this.props.addMessageFn(msg[0])
+      })
     }
   }
 
-  async UNSAFE_componentWillMount() {
+  async componentWillMount() {
     const userInfo = JSON.parse(await AsyncStorage.getItem('userToken'))
     const user = {
       _id: userInfo._id,
       name: userInfo.nickname,
       avatar: userInfo.avatar,
     };
-    this.setState({
-      messages: [],
-      user
-    })
+    this.props.addUserFn(user);
   }
 
   onSend(messages = []) {
-    console.log(2)
-    this.ws.websocket.send(JSON.stringify(messages))
-    console.log(3)
-    // this.setState(previousState => ({
-    //   messages: GiftedChat.append(previousState.messages, messages),
-    // }))
+    this.props.ws.onSend(JSON.stringify(messages))
   }
 
   renderMessage(props) {
@@ -96,7 +78,7 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    const { user, messages } = this.state
+    const { user, messages } = this.props
     return (
       <GiftedChat
         messages={messages}
@@ -108,3 +90,15 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({
+    messages: state.home.messages,
+    user: state.home.user,
+    ws: state.home.ws
+  }),
+  (dispatch) => ({
+    addUserFn: (user) => dispatch(addUser(user)),
+    addMessageFn: (message) => dispatch(addMessage(message)),
+  })
+)(HomeScreen)

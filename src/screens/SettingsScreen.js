@@ -24,7 +24,6 @@ export default class SettingsScreen extends React.Component {
   }
   async UNSAFE_componentWillMount() {
     const userInfo = JSON.parse(await AsyncStorage.getItem('userToken'))
-    console.log(1, userInfo)
     this.setState({
       userInfo: userInfo
     })
@@ -43,7 +42,6 @@ export default class SettingsScreen extends React.Component {
         subtitle: 'Vice Chairman'
       }
     ]
-    console.log(2, userInfo)
     return (
       <View>
         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -60,7 +58,7 @@ export default class SettingsScreen extends React.Component {
             }}
             showEditButton
           />
-          <Text style={{ height: 100, width: 100}}>{userInfo.nickname}</Text>
+          <Text style={{ height: 100, width: 100 }}>{userInfo.nickname}</Text>
         </View>
         {/* {
           list.map((l, i) => (

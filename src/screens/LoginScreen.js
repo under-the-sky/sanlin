@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
-import { Login } from '../service';
+import { Login } from '../service/login';
 import AsyncStorage from '@react-native-community/async-storage';
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -59,7 +59,6 @@ export default class LoginScreen extends React.Component {
     const { phone, password } = this.state
     const result = await Login(phone, password)
     if (result.user) {
-      console.log(result.user)
       await AsyncStorage.setItem('userToken', JSON.stringify(result.user));
       this.props.navigation.navigate('Main');
     }

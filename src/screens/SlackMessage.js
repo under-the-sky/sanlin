@@ -13,6 +13,10 @@ const { isSameUser, isSameDay } = utils;
 
 export default class Message extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   getInnerComponentProps() {
     const { containerStyle, ...props } = this.props;
     return {

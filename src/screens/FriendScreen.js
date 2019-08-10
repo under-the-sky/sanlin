@@ -2,12 +2,15 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
-export default class LinksScreen extends React.Component {
+import { connect } from 'react-redux';
+import { logout } from '../reducer/homeReducer';
+class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Links',
   };
 
   _signOutAsync = async () => {
+    this.props.logoutFn()
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
@@ -32,3 +35,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+
+export default connect(
+  (state) => ({
+    ws: state.home.ws
+  }),
+  (dispatch) => ({
+    logoutFn: (ws) => dispatch(logout(ws)),
+  })
+)(LinksScreen)

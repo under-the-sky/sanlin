@@ -1,12 +1,37 @@
 
 import { API_HOST } from '../config'
-export default class WS {
+class WS {
 
   constructor() {
     this.websocket = new WebSocket(API_HOST);
     this.timeout = 1000 * 60 * 9;
     this.serverTimeoutObj = null;
   }
+
+  onClose(e) {
+    this.websocket.close(e)
+  }
+
+  onOpen(fn) {
+    this.websocket.onopen = (e) => {
+      if (typeof fn === 'function') {
+        fn(e);
+      }
+    }
+  }
+
+  onMessage(fn) {
+    this.websocket.onmessage = (e) => {
+      if (typeof fn === 'function') {
+        fn(e);
+      }
+    }
+  }
+
+  onSend(message) {
+    this.websocket.send(message)
+  }
+
   reset() {
     clearInterval(this.serverTimeoutObj);
     return this;
@@ -22,3 +47,5 @@ export default class WS {
     }, this.timeout)
   }
 }
+
+export const ws = new WS()
