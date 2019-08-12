@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, View, Image, Alert } from 'react-native';
+import { Platform, StyleSheet, View, Image } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import emojiUtils from 'emoji-utils';
 import SlackMessage from './SlackMessage';
@@ -44,6 +44,7 @@ class HomeScreen extends React.Component {
   }
 
   onSend(messages = []) {
+    this.props.addMessageFn(messages[0])
     this.props.ws.onSend(JSON.stringify(messages))
   }
 
@@ -85,6 +86,7 @@ class HomeScreen extends React.Component {
         onSend={messages => this.onSend(messages)}
         user={user}
         renderMessage={this.renderMessage}
+        keyboardShouldPersistTaps='never'
       // renderSend={this.renderSend}
       />
     );
