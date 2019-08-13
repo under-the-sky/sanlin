@@ -6,7 +6,9 @@
     "start": "react-native start --reset-cache",
     "test": "jest",
     "dev": "ENVFILE=.env.dev react-native run-ios",
-    "prod": "ENVFILE=.env.production react-native run-ios"
+    "prod": "ENVFILE=.env.production react-native run-ios",
+    "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.jsbundle --assets-dest ./ios/bundle",
+    "bundle-android": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
@@ -31,6 +33,7 @@
     "@react-native-community/eslint-config": "^0.0.3",
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
+    "jetifier": "^1.6.4",
     "metro-react-native-babel-preset": "^0.54.1",
     "react-test-renderer": "16.8.6"
   },
