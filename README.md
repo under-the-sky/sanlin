@@ -38,3 +38,10 @@
   $ react-native run-android
   ```
 
+6. **build on Android**:
+   ```
+   cd android
+   sudo ./gradlew assembleRelease
+
+   ```
+
