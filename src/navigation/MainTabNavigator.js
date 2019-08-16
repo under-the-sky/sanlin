@@ -9,8 +9,12 @@ import HomeScreen from '../screens/HomeScreen';
 import FriendScreen from '../screens/FriendScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 
-export const AuthStack = createStackNavigator({ Login: LoginScreen });
+export const AuthStack = createStackNavigator({ Login: LoginScreen, signup: SignupScreen }, {
+  initialRouteName: 'Login',
+});
+
 
 const HomeStack = createStackNavigator(
   {
