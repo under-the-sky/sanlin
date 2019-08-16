@@ -2,7 +2,7 @@ import env from 'react-native-config'
 
 const config = {
   api: {
-    host: 'https://api.tynb0622.com',
+    host: 'http://192.168.0.105:3000',
     timeout: 20000
   }
 };

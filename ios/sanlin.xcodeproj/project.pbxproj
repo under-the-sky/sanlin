@@ -63,6 +63,7 @@
 		110F9B4E22FB0A8600C61FD9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		110F9B4F22FB0A8700C61FD9 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		110F9B5022FB0A8700C61FD9 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
+		11551D05230687B10067F245 /* libRNCPushNotificationIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNCPushNotificationIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		119F974D23011DB800171AC3 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		11E90C1A2305B50400520A0B /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = bundle/main.jsbundle; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* sanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +160,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				11551D05230687B10067F245 /* libRNCPushNotificationIOS.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				0D7C1D55CAD1B1C2A358A624 /* libPods-sanlin.a */,
@@ -739,7 +741,6 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
 					"\"${PODS_ROOT}/Headers/Public/RNCAsyncStorage\"",
-					"\"${PODS_ROOT}/Headers/Public/RNCPushNotificationIOS\"",
 					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
 					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
 					"\"${PODS_ROOT}/Headers/Public/RNVectorIcons\"",
@@ -792,7 +793,6 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
 					"\"${PODS_ROOT}/Headers/Public/RNCAsyncStorage\"",
-					"\"${PODS_ROOT}/Headers/Public/RNCPushNotificationIOS\"",
 					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
 					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
 					"\"${PODS_ROOT}/Headers/Public/RNVectorIcons\"",

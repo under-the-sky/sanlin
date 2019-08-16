@@ -5,9 +5,10 @@ class WS {
 
   constructor() {
     this.websocket = new WebSocket(API_HOST);
-    this.timeout = 1000 * 60 * 9;
+    this.timeout = 1000 * 60 * 3;
     this.serverTimeoutObj = null;
     this.notif = new NotifService(this.onRegister.bind(this), this.onNotif.bind(this));
+    this.start()
   }
 
   onRegister(token) {
@@ -18,7 +19,14 @@ class WS {
     console.log(notif);
   }
 
-  onClose(e) {
+  onClose(fn) {
+    this.websocket.onclose = (e) => {
+      if (typeof fn === 'function') {
+        fn(e)
+      }
+    }
+  }
+  close(e) {
     this.websocket.close(e)
   }
 
@@ -38,8 +46,6 @@ class WS {
           message: msg.text,
           title: 'sanlin'
         }
-        this.notif.localNotif(data)
-        this.notif.setBadge()
         fn(e);
       }
     }
@@ -59,7 +65,7 @@ class WS {
       if (this.websocket.readyState == 1) {
         this.reset().start();
       } else {
-        new WS();
+        this.websocket = new WebSocket(API_HOST);
       }
     }, this.timeout)
   }

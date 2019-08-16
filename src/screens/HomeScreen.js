@@ -1,11 +1,12 @@
 import React from 'react';
-import { Platform, StyleSheet, View, Image } from 'react-native';
+import { Platform, StyleSheet, View, Image, AppState } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import emojiUtils from 'emoji-utils';
 import SlackMessage from './SlackMessage';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { addMessage, addUser, addScoket } from '../reducer/homeReducer';
+import { appActive, appBackground, appInactive } from '../reducer/appReducer'
 class HomeScreen extends React.Component {
 
   constructor(props) {
@@ -29,8 +30,24 @@ class HomeScreen extends React.Component {
       this.props.ws.onMessage((e) => {
         const msg = JSON.parse(e.data)
         this.props.addMessageFn(msg[0])
+        if (this.props.appState !== 'active') {
+          const notiOtpIOS = {
+            message: msg[0].text,
+            title: msg[0].user.name
+          }
+          this.props.ws.notif.localNotif(notiOtpIOS)
+          this.props.ws.notif.setBadge()
+        }
+      })
+      this.props.ws.onClose(e => {
+        console.log('断开连接: ', e)
       })
     }
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   async componentWillMount() {
@@ -42,6 +59,24 @@ class HomeScreen extends React.Component {
     };
     this.props.addUserFn(user);
   }
+
+  _handleAppStateChange = (nextAppState) => {
+    switch (nextAppState) {
+      case 'active':
+        this.props.ws.notif.setBadge(0)
+        this.props.appActiveFn()
+        return true;
+      case 'inactive':
+        this.props.appInactive()
+        return true
+      case 'background':
+        this.props.appBackground()
+        return true
+      default:
+        break
+    }
+  };
+
 
   onSend(messages = []) {
     this.props.addMessageFn(messages[0])
@@ -97,10 +132,14 @@ export default connect(
   (state) => ({
     messages: state.home.messages,
     user: state.home.user,
-    ws: state.home.ws
+    ws: state.home.ws,
+    appState: state.appRuntime.appState
   }),
   (dispatch) => ({
     addUserFn: (user) => dispatch(addUser(user)),
     addMessageFn: (message) => dispatch(addMessage(message)),
+    appActiveFn: () => dispatch(appActive()),
+    appBackground: () => dispatch(appBackground()),
+    appInactive: () => dispatch(appInactive())
   })
 )(HomeScreen)

@@ -10,7 +10,8 @@ const initialState = {
   user: {},
   ws: ws
 }
-function home(state = initialState, action) {
+
+export const home = (state = initialState, action) => {
   switch (action.type) {
     case ADD_Message:
       const msg = JSON.parse(JSON.stringify(state.messages))
@@ -30,7 +31,7 @@ function home(state = initialState, action) {
         ws: action.ws
       }
     case Close_Websocket:
-      action.ws.onClose();
+      action.ws.close();
       return {
         ...state,
         ws: action.ws
@@ -49,12 +50,9 @@ export function addScoket(ws) {
 export function closeScoket(ws) {
   return { type: Close_Websocket, ws }
 }
-
 export function addUser(user) {
   return { type: ADD_User, user }
 }
 export function addMessage(message) {
   return { type: ADD_Message, message }
 }
-
-export default home;
